@@ -7,4 +7,4 @@ Study and testing of specific concepts.
 
 -   [x] Callbacks
 -   [x] Promises
--   [] Async/Await
+-   [ ] Async/Await
