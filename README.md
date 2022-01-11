@@ -1,4 +1,4 @@
-# studybench
+# Studyroom
 
 Study and testing of specific concepts.
 (in JavaScript)
