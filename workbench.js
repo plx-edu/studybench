@@ -24,6 +24,9 @@ function showLesson(num) {
         case 2:
             promiseStudy();
             break;
+        case 3:
+            asyncAwaitStudy();
+            break;
         default:
             // callbackStudy();
             // br();
@@ -36,7 +39,7 @@ function showLesson(num) {
             break;
     }
 }
-showLesson("all");
+showLesson(3);
 
 /////////////////////////////////////////////////
 /////////// DISSECTION OF A CALLBACK ////////////
@@ -73,9 +76,8 @@ function callbackStudy() {
 }// callbackStudy()
 
 /////////////////////////////////////////////////
-/////////// DISSECTION OF PROMISE ///////////////
+////////// DISSECTION OF A PROMISE //////////////
 function promiseStudy() {
-    // let tab = "";
     let successful = true; // change here to modify outcome
     let countCalls = 0; // used to check number of calls in promise
 
@@ -109,12 +111,12 @@ function promiseStudy() {
     }
     // C-1 - function when "resolve"
     function success() {
-        print(tab(1) + `(C-1) resolve runs function passed to it`);
+        print(tab(1) + `(C-1.${++countCalls}) resolve runs function passed to it`);
         return `(C-1.${++countCalls}) result of resolved`;
     }
     // C-2 - function when "reject"
     function failure() {
-        print(tab(1) + `(C-2${++countCalls}) rejected² runs function passed to it`);
+        print(tab(1) + `(C-2.${++countCalls}) rejected runs function passed to it`);
         return `(C-2.${++countCalls}) result of rejected`;
     }
 
@@ -135,12 +137,75 @@ function promiseStudy() {
 
 
     // F
-    print(`(F) End of Lesson (or is it ?)`);
+    print(`(F) promise.then() is called with success function as callback`);
+    print(`   you'll see another (C-1) amongst the other results`);
+    print(`   notice how it's not the (C-1.x) that the function returns`);
+    promise.then(success);
+
+    // G
+    print(`(G) End of Lesson (or is it ?)`);
     print(smbl + " Dissection of a promise " + smbl);
 
 }// promiseStudy()
 
+/////////////////////////////////////////////////
+///////// DISSECTION OF ASYNC/AWAIT /////////////
+function asyncAwaitStudy() {
+    let countCalls = 0;
 
+    // A
+    print(smbl + " Dissection of async/await " + smbl);
+    print(`(A) Init`);
+
+
+    // B
+    // async functions always returns a promise.
+    print(`(B) "outer" async function definition`);
+    async function asyncParent() {
+        // B-1
+        print(tab(1) + `(B-${++countCalls}) "inner" is running`);
+
+        // B-2
+        print(tab(1) + `(B-${++countCalls}) "inner", defining a promise through the async syntax`);
+        async function asyncChild() {
+            print(tab(2) + `(B-${++countCalls}) "inner async" is running`);
+            return `(B-${++countCalls}) SUCCESS (inner)`;
+        }
+
+        // B-3
+        print(tab(1) + `(B-${++countCalls}) using await through variable affectation`);
+        let result = await asyncChild();
+        print(tab(1) + `(B-${++countCalls})` + result);
+
+        // something "nice" happens when duplicated
+        // uncomment next line to see (and copy as many times as you want)
+        // print(tab(1) + `(B-${++countCalls})` + result);
+
+        // B-7
+        print(tab(1) + `(B-${++countCalls}) using await "directly" with a then`);
+        print(tab(2) + `(B-${++countCalls})` + await asyncChild()
+            .then(print(tab(3) + `(B-${++countCalls}).then ` + await asyncChild())));
+
+
+        return `(B-${++countCalls}) SUCCESS`;
+    }
+
+    // C
+    // print(`(C) calling async function with .then()`);
+    // console.log(asyncParent().then(
+    //     result => print(tab(1) + `(C-1) result: ` + result)));
+
+    print(`(C) calling async function WITHOUT .then()`);
+    console.log(asyncParent());
+    print(`(D) ^^^ Promise object above is async function called at "C"`);
+
+
+
+    // (E)
+    print(`(E) End of Lesson (or is it ?)`);
+    print(smbl + " Dissection of asyn/await " + smbl);
+
+}// asyncAwaitStudy()
 
 
 
