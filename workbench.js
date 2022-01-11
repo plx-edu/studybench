@@ -34,6 +34,8 @@ function showLesson(num) {
             promiseStudy();
             br();
             callbackStudy();
+            br();
+            asyncAwaitStudy();
             print("##### End studies #####");
             br();
             break;
@@ -203,7 +205,7 @@ function asyncAwaitStudy() {
 
     // (E)
     print(`(E) End of Lesson (or is it ?)`);
-    print(smbl + " Dissection of asyn/await " + smbl);
+    print(smbl + " Dissection of async/await " + smbl);
 
 }// asyncAwaitStudy()
 
