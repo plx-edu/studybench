@@ -5,6 +5,6 @@ Study and testing of specific concepts.
 
 ## Concepts (to be) seen
 
-[x] Callbacks
-[x] Promises
-[] Async/Await
+-   [x] Callbacks
+-   [x] Promises
+-   [] Async/Await
